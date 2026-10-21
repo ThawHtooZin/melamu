@@ -1,0 +1,746 @@
+@font-face {
+  font-family: "MM Taunggyi";
+  src: url("/fonts/MMTaunggyi.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Padauk";
+  src: url("/fonts/Padauk-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Padauk";
+  src: url("/fonts/Padauk-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pyidaungsu";
+  src: url("/fonts/Pyidaungsu-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --yellow: #ffd700;
+  --nav-strip: #fff1a6;
+  --bg: #fff1a6;
+  --title: #651906;
+  --ink: #000;
+  --btn-border: #e09900;
+  /* Body/UI: simple Padauk like original (Open Sans + Myanmar fallback).
+     Fancy MM Taunggyi is header title only (.sdg-title). */
+  --font: "Padauk", "Myanmar Text", "Noto Sans Myanmar", sans-serif;
+  --font-title: "MM Taunggyi", "Padauk", sans-serif;
+  --header-h: 78px;
+  --nav-h: 58px;
+  --footer-h: 78px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ===== SHELL: fit one screen ===== */
+.app-shell {
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* ===== HEADER ===== */
+.kiosk-header {
+  background: var(--yellow);
+  display: grid;
+  grid-template-columns: 76px 1fr 76px;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  min-height: var(--header-h);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  z-index: 2;
+}
+
+.kiosk-logo {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  border: 2px solid #fff;
+}
+
+/* Original .sdg-title — only place that uses fancy MM Taunggyi */
+.kiosk-title {
+  margin: 0;
+  text-align: center;
+  font-family: "MM Taunggyi", var(--font-title);
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem); /* ~24px on desktop */
+  font-weight: 400;
+  line-height: 1.8;
+  color: #651906;
+  padding-top: 0.35rem;
+}
+
+/* ===== TOP NAV — equal width full row ===== */
+.top-nav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.55rem;
+  padding: 0.35rem 5%;
+  background: var(--nav-strip);
+  min-height: var(--nav-h);
+}
+
+.nav-rect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.55rem 0.4rem;
+  background: var(--yellow);
+  border: 2px solid var(--btn-border);
+  border-radius: 0;
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(0.72rem, 1.05vw, 0.85rem);
+  letter-spacing: 0.5px;
+  line-height: 1.25;
+  min-height: 44px;
+}
+
+.nav-rect:hover,
+.nav-rect.active {
+  background: #ffe34a;
+}
+
+/* ===== MAIN fills remaining viewport ===== */
+.kiosk-main {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0.25rem 0 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg);
+}
+
+.screen-grid {
+  flex: 1;
+  min-height: 0;
+  width: 90%;
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.hero-frame,
+.media-panel {
+  border: 2px solid #111;
+  background: #111;
+  min-height: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+.hero-frame img,
+.media-panel img,
+.media-panel video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.banner-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 0.45rem;
+  min-height: 0;
+  height: 100%;
+  padding: 0.1rem 0;
+}
+
+/* Original Divi kanote banner — PNG with pointed ends */
+.banner-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  min-height: 0;
+  padding: 0.55rem 1.6rem;
+  color: #0c172e;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(0.8rem, 1.15vw, 0.95rem);
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+  border: none;
+  background-color: transparent;
+  background-image: url("/media/Pin-Ma-Sar-Myat-Nar.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.banner-btn:hover {
+  filter: brightness(1.05);
+}
+
+/* ===== MAP PAGE (Draw Attention collage) ===== */
+.map-page {
+  flex: 1;
+  min-height: 0;
+  width: 96%;
+  max-width: 1600px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  overflow: hidden;
+}
+
+.map-heading {
+  margin: 0;
+  text-align: center;
+  font-family: "MM Taunggyi", var(--font-title);
+  font-size: clamp(1rem, 1.7vw, 1.3rem);
+  font-weight: 400;
+  color: #651906;
+  line-height: 1.45;
+  flex-shrink: 0;
+}
+
+.map-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1.55fr 0.7fr;
+  gap: 0.55rem;
+  align-items: stretch;
+}
+
+.map-stage {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  background: var(--bg);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.map-stage-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  aspect-ratio: 1280 / 772;
+}
+
+.map-image {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  user-select: none;
+}
+
+.map-hotspots {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.map-hotspots .hotspot {
+  fill: rgba(255, 215, 0, 0.01);
+  stroke: transparent;
+  stroke-width: 1;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: fill 0.15s ease, stroke 0.15s ease;
+}
+
+.map-hotspots .hotspot.linked:hover,
+.map-hotspots .hotspot:hover,
+.map-hotspots .hotspot.active {
+  fill: rgba(255, 200, 0, 0.28);
+  stroke: #c48a00;
+}
+
+.map-hotspots .hotspot.linked {
+  cursor: pointer;
+}
+
+.map-tip {
+  position: absolute;
+  transform: translate(-50%, -115%);
+  background: rgba(255, 241, 166, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  padding: 0.4rem 0.7rem;
+  max-width: min(240px, 70%);
+  font-family: var(--font);
+  font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: #111;
+  text-align: center;
+  z-index: 5;
+  pointer-events: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  white-space: normal;
+}
+
+.map-legend {
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem 0.75rem;
+  padding: 0.15rem 0.25rem;
+  font-family: var(--font);
+}
+
+.map-legend-col {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.map-legend-col li {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.25rem;
+  align-items: start;
+  padding: 0.12rem 0.15rem;
+  font-size: clamp(0.68rem, 0.95vw, 0.82rem);
+  line-height: 1.3;
+  color: #800000;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.map-legend-col li:hover,
+.map-legend-col li.active {
+  background: rgba(255, 215, 0, 0.45);
+}
+
+.map-legend-col .mm-num {
+  font-weight: 700;
+}
+
+.map-legend-col .mm-label {
+  font-weight: 400;
+}
+
+/* ===== IMAGE GRID (festival 6×2, etc.) ===== */
+.image-grid-page {
+  flex: 1;
+  min-height: 0;
+  width: 94%;
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.15rem 0 0.35rem;
+  overflow: hidden;
+}
+
+.grid-heading {
+  margin: 0;
+  text-align: center;
+  font-family: "MM Taunggyi", var(--font-title);
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 400;
+  color: #651906;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.image-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  gap: 0.45rem 0.55rem;
+  align-content: stretch;
+}
+
+.grid-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  min-height: 0;
+  color: #000;
+  font-family: var(--font);
+}
+
+.grid-tile img {
+  width: 100%;
+  min-height: 0;
+  object-fit: cover;
+  border: 2px solid #3cb371;
+  border-radius: 8px;
+  background: #f5f5dc;
+}
+
+/* Beliefs / pagodas / statues — portrait 9:16, height-driven so 2 rows fit */
+.image-grid--portrait {
+  grid-auto-rows: 1fr;
+  justify-items: center;
+}
+
+.image-grid--portrait .grid-tile {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+}
+
+.image-grid--portrait .grid-tile img {
+  flex: 1 1 0;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+}
+
+/* Festival month illustrations — landscape */
+.image-grid--landscape {
+  grid-auto-rows: 1fr;
+}
+
+.image-grid--landscape .grid-tile img {
+  flex: 1 1 0;
+  width: 100%;
+  height: 0;
+  aspect-ratio: 16 / 10;
+}
+
+.gallery-grid .grid-tile img {
+  border-color: #111;
+  border-radius: 0;
+  aspect-ratio: 4 / 3;
+}
+
+.tile-title {
+  margin-top: 0.2rem;
+  font-weight: 700;
+  font-size: clamp(0.7rem, 1vw, 0.88rem);
+  line-height: 1.25;
+}
+
+.tile-caption {
+  font-weight: 400;
+  font-size: clamp(0.65rem, 0.9vw, 0.8rem);
+  line-height: 1.25;
+}
+
+.text-hub-page {
+  flex: 1;
+  min-height: 0;
+  width: 90%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  overflow: auto;
+}
+
+.text-hub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem 1rem;
+  align-content: start;
+}
+
+.text-hub-grid .banner-btn {
+  flex: none;
+  min-height: 52px;
+}
+
+/* Soft hub — intro + rounded gold CTAs (Buddha Teaching style) */
+.soft-hub {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 0;
+  height: 100%;
+  padding: 0.35rem 0.25rem;
+}
+
+.soft-hub-intro {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 2px solid #111;
+  background: var(--yellow);
+  font-family: var(--font);
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  font-weight: 700;
+  line-height: 1.65;
+  text-align: center;
+  color: #000;
+}
+
+.pill-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 64px;
+  padding: 0.85rem 1.4rem;
+  border: 2px solid #8a6a00;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffe566 0%, #ffd700 45%, #e6c200 100%);
+  box-shadow: 0 3px 0 #c4a000, 0 6px 12px rgba(0, 0, 0, 0.12);
+  color: #000;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  line-height: 1.35;
+}
+
+.pill-btn:hover {
+  filter: brightness(1.04);
+}
+
+/* leaf / article page — no box; sit on page bg */
+.text-panel {
+  background: transparent;
+  border: none;
+  padding: 0.35rem 0.5rem 0.35rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.text-panel h1 {
+  margin: 0;
+  font-family: var(--font);
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.35;
+  flex-shrink: 0;
+}
+
+.text-panel .body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.home-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0.65rem 0.75rem;
+  background: var(--yellow);
+  border: 2px solid var(--btn-border);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.status {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+/* ===== FOOTER pinned ===== */
+.kiosk-footer {
+  background: #ffd701;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.2rem;
+  padding: 0.45rem 0.35rem 0.55rem;
+  min-height: var(--footer-h);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
+  z-index: 2;
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  color: #000;
+  text-align: center;
+  min-width: 0;
+}
+
+.footer-item .footer-icon {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  line-height: 1;
+  color: #000;
+}
+
+.footer-item .footer-icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.footer-item span {
+  font-size: clamp(0.65rem, 1vw, 0.8rem);
+  font-weight: 700;
+  line-height: 1.15;
+  font-family: var(--font);
+  color: #000;
+}
+
+/* WP html inside text panel */
+.wp-content {
+  background: transparent;
+  color: var(--ink);
+}
+
+.text-panel .wp-content .melamu-img,
+.text-panel .wp-content figure,
+.text-panel .wp-content .et_pb_button,
+.text-panel .wp-content .melamu-blurb,
+.text-panel .wp-content .melamu-note {
+  display: none !important;
+}
+
+.wp-content .melamu-text {
+  margin: 0 0 0.7rem;
+}
+
+.wp-content .melamu-text p {
+  margin: 0 0 0.7rem;
+}
+
+.wp-content ol,
+.wp-content ul {
+  margin: 0.4rem 0 0.8rem 1.2rem;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  html,
+  body,
+  #root {
+    overflow: auto;
+  }
+  .app-shell {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+  .map-page {
+    width: 98%;
+    height: auto;
+    overflow: visible;
+  }
+  .map-body {
+    grid-template-columns: 1fr;
+  }
+  .map-stage {
+    min-height: 240px;
+  }
+  .image-grid-page {
+    width: 96%;
+    height: auto;
+    overflow: visible;
+  }
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .text-hub-grid {
+    grid-template-columns: 1fr;
+  }
+  .screen-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .hero-frame,
+  .media-panel {
+    min-height: 240px;
+    height: 240px;
+  }
+  .banner-stack {
+    height: auto;
+  }
+  .banner-btn {
+    flex: none;
+    min-height: 48px;
+  }
+  .top-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .kiosk-footer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .text-panel {
+    height: auto;
+    max-height: none;
+  }
+}
